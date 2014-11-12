@@ -25,6 +25,10 @@ typedef enum {
 @property (nonatomic, assign) MFSideMenuPanDirection panDirection;
 
 @property (nonatomic, assign) BOOL viewHasAppeared;
+
+@property (nonatomic, assign) BOOL statusBarStyleIsCustom;
+@property (nonatomic, assign) BOOL autorotationOptionIsCustom;
+
 @end
 
 @implementation MFSideMenuContainerViewController
@@ -143,8 +147,15 @@ typedef enum {
     }
 }
 
+- (void)setCustomStatusBarStyle:(UIStatusBarStyle)customStatusBarStyle {
+    _customStatusBarStyle = customStatusBarStyle;
+    self.statusBarStyleIsCustom = YES;
+}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+    if (self.statusBarStyleIsCustom) {
+        return self.customStatusBarStyle;
+    }
     if (self.centerViewController) {
         if ([self.centerViewController isKindOfClass:[UINavigationController class]]) {
             return [((UINavigationController *)self.centerViewController).topViewController preferredStatusBarStyle];
@@ -168,7 +179,15 @@ typedef enum {
     return [super supportedInterfaceOrientations];
 }
 
+- (void)setCustomShouldAutorotate:(BOOL)customShouldAutorotate {
+    _customShouldAutorotate = customShouldAutorotate;
+    self.autorotationOptionIsCustom = YES;
+}
+
 -(BOOL)shouldAutorotate {
+    if (self.autorotationOptionIsCustom) {
+        return self.customShouldAutorotate;
+    }
     if (self.centerViewController) {
         if ([self.centerViewController isKindOfClass:[UINavigationController class]]) {
             return [((UINavigationController *)self.centerViewController).topViewController shouldAutorotate];

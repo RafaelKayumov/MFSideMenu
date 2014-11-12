@@ -61,6 +61,8 @@ typedef enum {
 @property (nonatomic, assign) BOOL menuSlideAnimationEnabled;
 @property (nonatomic, assign) CGFloat menuSlideAnimationFactor; // higher = less menu movement on animation
 
+@property (nonatomic, assign) UIStatusBarStyle customStatusBarStyle;
+@property (nonatomic, assign) BOOL customShouldAutorotate;
 
 - (void)toggleLeftSideMenuCompletion:(void (^)(void))completion;
 - (void)toggleRightSideMenuCompletion:(void (^)(void))completion;
